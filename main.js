@@ -30,12 +30,12 @@ boton.addEventListener("click",function(){
     let valorInput = input.value;
 
 
-    let objeto={
+    let objeto = {
         gusto:valorInput,
-        fecha:new Date()
+        fecha:new Date().toLocaleString()
     }
 
-    freezer.innerHTML = valorInput;
+    freezer.innerHTML = `Gusto: ${objeto.gusto}, Fecha:${objeto.fecha}`;
 
 
     localStorage.setItem("heladosguardados", valorInput);
