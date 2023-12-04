@@ -9,6 +9,7 @@ let botonEliminar = document.getElementById("botonEliminar");
 window.onload = function() {
     let helados = localStorage.getItem("heladosguardados");
     if (helados) {
+        // llamamos a el OBJETO que guardamos en el local
         GustosHelados = JSON.parse(helados);
         registro(); // Mostrar los helados almacenados al cargar la página
     }
@@ -25,7 +26,7 @@ boton.addEventListener("click", function() {
     GustosHelados.push(objeto);
 
     freezer.innerHTML = `Gusto: ${objeto.gusto}, Fecha:${objeto.fecha}`;
-
+// GUARDAMOS UN OBJETO EN EL LOCAL
     localStorage.setItem("heladosguardados", JSON.stringify(GustosHelados));
 
     input.value = "";
