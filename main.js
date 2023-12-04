@@ -1,11 +1,10 @@
 
-//  quiero que se muestre el stock de helados (a traves de un buscador)
-
-//  quiero registro de todos los helados agregados 
 let GustosHelados = [];
 let input = document.getElementById("helados");
 let boton = document.getElementById("agregar");
 let freezer = document.getElementById("freezer");
+let inputEliminar = document.getElementById("inputEliminar");
+let botonEliminar = document.getElementById("botonEliminar");
 
 window.onload = function() {
     let helados = localStorage.getItem("heladosguardados");
@@ -18,31 +17,41 @@ window.onload = function() {
 boton.addEventListener("click", function() {
     let valorInput = input.value;
     let objeto = {
+        nombre: valorInput, // Agregar el atributo nombre
         gusto: valorInput,
         fecha: new Date().toLocaleString()
-    };
+    }
 
-    // LE HAGO UN PUSH A LOS HELADOS Y LOS METO EN UNA ARRAY
     GustosHelados.push(objeto);
 
-    // muestro los helados en el div
     freezer.innerHTML = `Gusto: ${objeto.gusto}, Fecha:${objeto.fecha}`;
 
-    // Guardar en localStorage después de cada clic
     localStorage.setItem("heladosguardados", JSON.stringify(GustosHelados));
 
     input.value = "";
 
     registro(); // Mostrar todos los helados después de agregar uno nuevo
-});
+})
 
-let registro = () => {
-    
-    freezer.innerHTML = "";
+botonEliminar.addEventListener("click", function() {
+    eliminarHeladoPorNombre()
+})
 
-    // Mostrar todos los helados en el div
-    GustosHelados.forEach(function(objeto) {
-        freezer.innerHTML += `Gusto: ${objeto.gusto}, Fecha: ${objeto.fecha} Esto viene del frezzer<br>`;
-    });
+function eliminarHeladoPorNombre() {
+    let nombreEliminar = inputEliminar.value
+
+    if (nombreEliminar) {
+        GustosHelados = GustosHelados.filter(objeto => objeto.nombre !== nombreEliminar);
+        localStorage.setItem("heladosguardados", JSON.stringify(GustosHelados));
+        registro();
+        inputEliminar.value = "";
+    } 
 }
 
+let registro = () => {
+    freezer.innerHTML = "";
+
+    GustosHelados.forEach(function(objeto) {
+        freezer.innerHTML += `Gusto: ${objeto.gusto}, Fecha: ${objeto.fecha} Esto está en el frezzer <br>`;
+    })
+}
